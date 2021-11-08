@@ -45,6 +45,14 @@ const itemSchema = new mongoose.Schema({
     updateAt: {
         type: Date,
         default: Date.now
+    },
+    lat: {
+        type: String,
+        required: true
+    },
+    long: {
+        type: String,
+        required: true
     }
 });
 
