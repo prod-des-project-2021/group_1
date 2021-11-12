@@ -23,8 +23,8 @@ const itemSchema = new mongoose.Schema({
         required: true
     },
     rate : {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Rate"
+        type: Array,
+        required: true
     },
     price : {
         type: Number,
