@@ -19,7 +19,7 @@ router.post('/', async (req, res) => {
     const rate = new Rate({
         rate: req.body.rate,
         comment: req.body.comment,
-        owner: req.body.ownerId
+        owner: req.body.owner
     });
 
     try {
