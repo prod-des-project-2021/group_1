@@ -5,7 +5,7 @@ const Rate = require('../models/rate');
 const verify = require('./verifyToken');
 
 //GET BACK ALL THE RATE
-router.get('/', verify, async (req, res) => {
+router.get('/', async (req, res) => {
     try {
         const rate = await Rate.find();
         res.json(rate);
@@ -19,7 +19,7 @@ router.post('/', async (req, res) => {
     const rate = new Rate({
         rate: req.body.rate,
         comment: req.body.comment,
-        owner: req.body.owner
+        owner: req.body.ownerId
     });
 
     try {
