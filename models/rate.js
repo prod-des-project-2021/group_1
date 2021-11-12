@@ -9,8 +9,8 @@ const rateSchema = new mongoose.Schema({
         type: String
     },
     owner : {
-        type: String,
-        required: true,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
     },
     date: {
         type: Date,
