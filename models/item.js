@@ -61,10 +61,6 @@ const itemSchema = new mongoose.Schema({
     },
     // geometry: geoSchema
     location: {
-        type: {
-            type: String,
-            enum: ['Point']
-        },
         coordinates: {
             type: [Number],
             index: '2dsphere'
@@ -84,7 +80,6 @@ itemSchema.set("toJSON", {
 itemSchema.pre('save', async function(next) {
     const loc = await geocoder.geocode(this.address);
     this.location = {
-        type: 'Point',
         coordinates: [loc[0].longitude, loc[0].latitude]
     }
 
