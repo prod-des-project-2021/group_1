@@ -1,6 +1,6 @@
 ## Available Scripts
 
-`cd backend/ && npm i && nodemon index.js` to install and run app manually
+`npm i && nodemon index.js` to install and run app manually
 
 # PREVIEW
 
