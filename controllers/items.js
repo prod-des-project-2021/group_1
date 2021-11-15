@@ -34,7 +34,7 @@ router.post('/', async (req, res) => {
     }
 });
 
-//SPECIFIC ITEMS
+//GET THE ITEM BY ID
 router.get('/:itemId', async (req, res) => {
     try {
         const item = await Item.findById(req.params.itemId);
