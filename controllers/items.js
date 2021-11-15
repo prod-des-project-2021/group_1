@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
     }
 });
 
-//SUBMITS A ITEM
+//CREATE A ITEM
 router.post('/', async (req, res) => {
     const item = new Item({
        name: req.body.name,
