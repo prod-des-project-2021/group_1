@@ -41,7 +41,7 @@ router.post('/login', async (req, res) => {
     if (error)  return res.status(400).send(error.details[0].message);
         //Checking if the user is already in the database
         const user = await User.findOne({username: req.body.username});
-        if(!user) return res.status(400).send('Username is not found');
+        if(!user) return res.status(400).send('username is not valid');
         //PASSWORD IS CORRECT
         const validPass = await bcrypt.compare(req.body.passwordHash, user.passwordHash);
         if(!validPass) return res.status(400).send('Invalid password');
