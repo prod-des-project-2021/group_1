@@ -38,10 +38,10 @@ router.post('/', async (req, res) => {
 router.get('/:itemId', async (req, res) => {
     try {
         const item = await Item.findById(req.params.itemId);
-        const avgRate = item.rate;
+        const getRate = item.rate;
 
-        const av = avgRate => avgRate.reduce((prev, curr) => prev + curr)/avgRate.length;
-        console.log(av(avgRate));
+        const getAvg = getRate => getRate.reduce((prev, curr) => prev + curr)/getRate.length;
+        console.log(getAvg(getRate));
         res.json(item);
     } catch {
         res.json({message: err});
