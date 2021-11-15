@@ -1,0 +1,326 @@
+openapi: 3.1.0
+info:
+  title: haircutapi
+  version: '1.0'
+  summary: Haircut store api
+  description: ''
+  contact:
+    name: Thinh Nguyen
+    url: t9ngdu00@students.oamk.fi
+    email: t9ngdu00@students.oamk.fi
+servers:
+  - url: 'http://localhost:3000'
+paths:
+  /items:
+    get:
+      summary: Get stores information
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  itemData:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ItemData'
+              examples:
+                example-1:
+                  value:
+                    itemData:
+                      - items_id: '1'
+                        name: Zuy Minh
+                        address: 'Ngõ 46c Phạm Ngọc Thạch, 106 C3 tập thể, Trung Tự, Đống Đa, Hà Nội, Việt Nam'
+                        rate:
+                          - null
+                          - null
+                          - null
+                          - null
+                          - null
+                        price: 5euro
+                        opentime: 9 AM
+                        contact_number: +84 384 568 983
+                        description: string
+                        discount_rate: 0
+                        instagram: string
+                        created_at: '2019-08-24T14:15:22Z'
+                        update_at: '2019-08-24T14:15:22Z'
+                        lat: '21.009618930610145'
+                        long: '105.83346939999998'
+      operationId: get-items
+      description: Get all the baber store information.
+    post:
+      summary: Post a item
+      operationId: post-items
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemData'
+        '404':
+          description: Not Found
+      description: |
+        Create item with store information
+  '/items/{id}':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+    get:
+      summary: Get a store
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemData'
+        '404':
+          description: Information with given id was mot found.
+      operationId: get-items-id
+      description: Get a single hari cut shop information
+    put:
+      summary: Edit a store
+      operationId: put-items-id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemData'
+              examples:
+                example-1:
+                  value:
+                    items_id: '1'
+                    name: Zuy Minh
+                    address: 'Ngõ 46c Phạm Ngọc Thạch, 106 C3 tập thể, Trung Tự, Đống Đa, Hà Nội, Việt Nam'
+                    rate:
+                      - null
+                    price: 5euro
+                    opentime: 9 AM
+                    contact_number: +84 384 568 983
+                    description: string
+                    discount_rate: 0
+                    instagram: string
+                    created_at: '2019-08-24T14:15:22Z'
+                    update_at: '2019-08-24T14:15:22Z'
+                    lat: '21.009618930610145'
+                    long: '105.83346939999998'
+      description: |
+        Edit item with store information
+  '/rate/{id}':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+    get:
+      summary: Get available comments and rates information from users for specific store
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  '':
+                    $ref: '#/components/schemas/Rate'
+              examples:
+                example-1:
+                  value:
+                    '':
+                      rate_id: '1'
+                      rate: '4,6/5'
+                      comment: Good service.
+                      owner: string
+                      date: 29/10/2021
+                      created_at: '2019-08-24T14:15:22Z'
+                      update_at: '2019-08-24T14:15:22Z'
+      operationId: get-rate-id
+  /login:
+    post:
+      summary: Login
+      operationId: post-login
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Owner'
+              examples:
+                example-2:
+                  value:
+                    id: 1
+                    username: thinhnguyen5
+                    name: houselanhahomelatoam
+                    created_at: '2019-08-24T14:15:22Z'
+                    passwordHash: '12345678'
+      description: |
+        Login to give feedbacks (rates, comments)
+  /register:
+    post:
+      summary: Register
+      operationId: post-register
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Owner'
+              examples:
+                example-2:
+                  value:
+                    id: 1
+                    username: thinhnguyen5
+                    name: houselanhahomelatoam
+                    created_at: '2019-08-24T14:15:22Z'
+                    passwordHash: '12345678'
+      description: |
+        (OPTIONAL if Google-auth is implemented)
+        Create user account
+  /rate:
+    post:
+      summary: Rate store
+      operationId: post-rate
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Rate'
+      description: Create a comment for the store
+components:
+  schemas:
+    ItemData:
+      title: Items
+      type: object
+      properties:
+        items_id:
+          type: integer
+          example: '1'
+        name:
+          type: string
+          example: Zuy Minh
+        address:
+          type: string
+          example: 'Ngõ 46c Phạm Ngọc Thạch, 106 C3 tập thể, Trung Tự, Đống Đa, Hà Nội, Việt Nam'
+        rate:
+          type: array
+          uniqueItems: false
+          items: {}
+        price:
+          type: number
+          example: 5euro
+        opentime:
+          type: string
+          example: 9 AM
+          format: date-time
+        contact_number:
+          type: string
+          example: +84 384 568 983
+        description:
+          type: string
+        discount_rate:
+          type: number
+        instagram:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        update_at:
+          type: string
+          format: date-time
+        lat:
+          type: string
+          example: '21.009618930610145'
+        long:
+          type: string
+          example: '105.83346939999998'
+      required:
+        - items_id
+        - name
+        - address
+        - rate
+        - price
+        - opentime
+        - contact_number
+        - description
+        - discount_rate
+        - instagram
+        - created_at
+        - update_at
+        - lat
+        - long
+    Rate:
+      title: Rate
+      type: object
+      properties:
+        rate_id:
+          type: integer
+          example: '1'
+        rate:
+          type: string
+          example: '4,6/5'
+        comment:
+          type: string
+          example: Good service.
+        owner:
+          type: string
+        date:
+          type: string
+          format: date-time
+          example: 29/10/2021
+        created_at:
+          type: string
+          format: date-time
+        update_at:
+          type: string
+          format: date-time
+      required:
+        - rate_id
+        - rate
+        - comment
+        - owner
+        - date
+        - created_at
+        - update_at
+    Owner:
+      title: Owner
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        username:
+          type: string
+          example: thinhnguyen5
+        name:
+          type: string
+          example: houselanhahomelatoam
+        created_at:
+          type: string
+          format: date-time
+        passwordHash:
+          type: string
+          example: '12345678'
+      required:
+        - id
+        - username
+        - name
+        - created_at
+        - passwordHash
