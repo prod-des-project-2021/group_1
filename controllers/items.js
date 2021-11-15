@@ -37,8 +37,12 @@ router.post('/', async (req, res) => {
 //SPECIFIC ITEMS
 router.get('/:itemId', async (req, res) => {
     try {
-    const item = await Item.findById(req.params.itemId);
-    res.json(item);
+        const item = await Item.findById(req.params.itemId);
+        const avgRate = item.rate;
+
+        const av = avgRate => avgRate.reduce((prev, curr) => prev + curr)/avgRate.length;
+        console.log(av(avgRate));
+        res.json(item);
     } catch {
         res.json({message: err});
     }
@@ -66,5 +70,19 @@ router.put('/:itemId', async (req, res) => {
         res.json({message: err});
     }
 });
+
+//Get average rate
+// router.get('/getAvg/:itemId', async (req, res) => {
+//     try {
+//         const getAvgrate = await Item.findById(req.params.itemId);
+        
+//         const avgRate = getAvgrate.rate;
+
+//         const av = avgRate => avgRate.reduce((prev, curr) => prev + curr)/avgRate.length;
+//         res.json(av(avgRate));
+//     } catch {
+//         res.json({message: err});
+//     }
+// });
 
 module.exports = router;
