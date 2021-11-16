@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
     }
 });
 
-//SUBMITS A ITEM
+//CREATE A ITEM
 router.post('/', async (req, res) => {
     const item = new Item({
        name: req.body.name,
@@ -27,14 +27,14 @@ router.post('/', async (req, res) => {
     });
 
     try {
-    const saveItem = await item.save();
-    res.json(saveItem);
+        const saveItem = await item.save();
+        res.json(saveItem);
     } catch(err) {
-        res.json({message: err})
+        res.json({message: err});
     }
 });
 
-//SPECIFIC ITEMS
+//GET THE ITEM BY ID
 router.get('/:itemId', async (req, res) => {
     try {
         const item = await Item.findById(req.params.itemId);
@@ -51,8 +51,8 @@ router.get('/:itemId', async (req, res) => {
 //DELETE ITEMS
 router.delete('/:itemId', async (req, res) => {
     try {
-    const removeItem = await Item.remove({_id: req.params.itemId})
-    res.json(removeItem);
+        const removeItem = await Item.remove({_id: req.params.itemId});
+        res.json(removeItem);
     } catch(err) {
         res.json({message: err});
     }
