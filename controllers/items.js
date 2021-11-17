@@ -41,9 +41,9 @@ router.get('/:itemId', async (req, res) => {
         const getRate = item.rate;
 
         const getAvg = getRate => getRate.reduce((prev, curr) => prev + curr)/getRate.length;
-        console.log(getAvg(getRate));
-        res.json(item);
-    } catch {
+        const rate = getAvg(getRate);
+        res.json({rate: rate});
+    } catch(err) {
         res.json({message: err});
     }
 });
