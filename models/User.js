@@ -20,7 +20,16 @@ const userSchema = new mongoose.Schema({
         required: true,
         max: 1024,
         min: 6
+    },
+    role: {
+        type: String,
+        enum: ['basic', 'supervisor', 'admin'],
+        default: 'admin'
+    },
+    accessToken: {
+        type: String
     }
 });
 
 module.exports = mongoose.model('User', userSchema);
+
