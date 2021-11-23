@@ -1,6 +1,7 @@
 const express = require('express');
 const User = require('../models/User');
 const { roles } = require('../roles')
+const jwt =  require('jsonwebtoken');
 
 exports.getUsers = async (req, res, next) => {
     const users = await User.find({});
@@ -8,7 +9,7 @@ exports.getUsers = async (req, res, next) => {
         data: users
     });
 }
-    
+   
 exports.getUser = async (req, res, next) => {
     try {
         const userId = req.params.userId;
@@ -68,11 +69,10 @@ exports.grantAccess = function(action, resource) {
 
 exports.allowIfLoggedin = async (req, res, next) => {
     try {
-        const user = res.locals.loggedInUser;
-        if (!user)
-        return res.status(400).send(
-            'Access Denied'
-        );
+        const reqToken = req.rawHeaders[1]
+        const verified = jwt.verify(reqToken, process.env.SECRET);
+        const user = await User.findById(verified.userId)
+        if (user.role !== 'admin' ) return res.status(400).send('Access Denied, no admin permission');
         req.user = user;
         next();
         } catch (error) {

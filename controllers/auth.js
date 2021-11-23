@@ -27,7 +27,7 @@ router.post('/register', async (req, res) => {
             username: req.body.username,
             name: req.body.name,
             passwordHash: hashedPassword,
-            role: role || 'admin'
+            role: role || 'basic'
         });
         const accessToken = jwt.sign({userId: user._id}, process.env.SECRET, {
             expiresIn: '1d'
