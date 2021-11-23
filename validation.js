@@ -15,7 +15,8 @@ const registerValidation = data => {
                 .required(),
         passwordHash: Joi.string()
                 .min(6)
-                .required()
+                .required(),
+        role: Joi.string()    
     });
     return schema.validate(data);
 };
