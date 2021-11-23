@@ -64,7 +64,7 @@ exports.grantAccess = function(action, resource) {
         next(error)
         }
     }
-   }
+}
 
 exports.allowIfLoggedin = async (req, res, next) => {
     try {
