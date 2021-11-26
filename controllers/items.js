@@ -50,7 +50,7 @@ router.get('/:itemId', user.allowIfLoggedin, user.grantAccess('readAny', 'profil
 });
 
 //DELETE ITEMS
-router.delete('/:itemId', user.allowIfLoggedin, user.grantAccess('readAny', 'profile'), async (req, res) => {
+router.delete('/:itemId', user.allowIfLoggedin, user.grantAccess('deleteAny', 'profile'), async (req, res) => {
     try {
         const removeItem = await Item.remove({_id: req.params.itemId});
         res.json(removeItem);
@@ -60,7 +60,7 @@ router.delete('/:itemId', user.allowIfLoggedin, user.grantAccess('readAny', 'pro
 });
 
 //UPDATE ITEMS
-router.put('/:itemId', user.allowIfLoggedin, user.grantAccess('readAny', 'profile'), async (req, res) => {
+router.put('/:itemId', user.allowIfLoggedin, user.grantAccess('updateAny', 'profile'), async (req, res) => {
     try{
         const updatedItem = await Item.updateOne(
             {_id: req.params.itemId}, 
