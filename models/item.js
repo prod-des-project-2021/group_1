@@ -31,8 +31,8 @@ const itemSchema = new mongoose.Schema({
         required: true
     },
     opentime: {
-        type: Date,
-        default: Date.now
+        type: String,
+        default: "10:00"
     },
     contact_number: {
         type: String,
