@@ -2,9 +2,10 @@ const express = require('express');
 
 const router = express.Router();
 const Item = require('../models/item');
+const user = require('./user');
 
 //GET BACK ALL THE ITEMS
-router.get('/', async (req, res) => {
+router.get('/', user.allowIfLoggedin, user.grantAccess('readAny', 'profile'), async (req, res) => {
     try {
         const item = await Item.find();
         res.json(item);
@@ -14,7 +15,7 @@ router.get('/', async (req, res) => {
 });
 
 //CREATE A ITEM
-router.post('/', async (req, res) => {
+router.post('/', user.allowIfLoggedin, user.grantAccess('readAny', 'profile'), async (req, res) => {
     const item = new Item({
        name: req.body.name,
        address: req.body.address,
@@ -35,7 +36,7 @@ router.post('/', async (req, res) => {
 });
 
 //GET THE ITEM BY ID
-router.get('/:itemId', async (req, res) => {
+router.get('/:itemId', user.allowIfLoggedin, user.grantAccess('readAny', 'profile'), async (req, res) => {
     try {
         const item = await Item.findById(req.params.itemId);
         const getRate = item.rate;
@@ -49,7 +50,7 @@ router.get('/:itemId', async (req, res) => {
 });
 
 //DELETE ITEMS
-router.delete('/:itemId', async (req, res) => {
+router.delete('/:itemId', user.allowIfLoggedin, user.grantAccess('readAny', 'profile'), async (req, res) => {
     try {
         const removeItem = await Item.remove({_id: req.params.itemId});
         res.json(removeItem);
@@ -59,7 +60,7 @@ router.delete('/:itemId', async (req, res) => {
 });
 
 //UPDATE ITEMS
-router.put('/:itemId', async (req, res) => {
+router.put('/:itemId', user.allowIfLoggedin, user.grantAccess('readAny', 'profile'), async (req, res) => {
     try{
         const updatedItem = await Item.updateOne(
             {_id: req.params.itemId}, 
