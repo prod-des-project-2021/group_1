@@ -2,9 +2,10 @@ const express = require('express');
 
 const router = express.Router();
 const Rate = require('../models/rate');
+const user = require('./user');
 
 //GET BACK ALL THE RATE
-router.get('/', async (req, res) => {
+router.get('/', user.allowIfLoggedin, user.grantAccess('readAny', 'profile'), async (req, res) => {
     try {
         const rate = await Rate.find();
         res.json(rate);
@@ -14,7 +15,7 @@ router.get('/', async (req, res) => {
 });
 
 //SUBMITS A RATE
-router.post('/', async (req, res) => {
+router.post('/', user.allowIfLoggedin, user.grantAccess('readAny', 'profile'), async (req, res) => {
     const rate = new Rate({
         rate: req.body.rate,
         comment: req.body.comment,
@@ -30,7 +31,7 @@ router.post('/', async (req, res) => {
 });
 
 //SPECIFIC RATE
-router.get('/:rateId', async (req, res) => {
+router.get('/:rateId', user.allowIfLoggedin, user.grantAccess('readAny', 'profile'), async (req, res) => {
     try {
     const rate = await Rate.findById(req.params.rateId);
     res.json(rate);
@@ -40,7 +41,7 @@ router.get('/:rateId', async (req, res) => {
 });
 
 //DELETE RATE
-router.delete('/:rateId', async (req, res) => {
+router.delete('/:rateId', user.allowIfLoggedin, user.grantAccess('deleteAny', 'profile'), async (req, res) => {
     try {
     const removeRate = await Rate.remove({_id: req.params.rateId})
     res.json(removeRate);
@@ -50,7 +51,7 @@ router.delete('/:rateId', async (req, res) => {
 });
 
 //UPDATE RATE
-router.put('/:rateId', async (req, res) => {
+router.put('/:rateId', user.allowIfLoggedin, user.grantAccess('updateAny', 'profile'), async (req, res) => {
     try{
         const updatedRate = await Rate.updateOne(
             {_id: req.params.rateId}, 
