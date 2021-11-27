@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const rateSchema = new mongoose.Schema({
     rate : {
         type: Number,
+        enum: [1, 2, 3, 4, 5],
         required: true,
     },
     comment : {
@@ -10,7 +11,7 @@ const rateSchema = new mongoose.Schema({
     },
     owner : {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
+        ref: 'User',
     },
     date: {
         type: Date,
@@ -31,7 +32,7 @@ const rateSchema = new mongoose.Schema({
 rateSchema.set('toJSON', {
     transform: (document, returnedObject) => {
         returnedObject.id = returnedObject._id.toString();
-        // delete returnedObject._id;
+        delete returnedObject._id;
         delete returnedObject.__v;
     }
 });
