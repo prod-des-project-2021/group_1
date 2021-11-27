@@ -1,11 +1,13 @@
 const express = require('express');
 
 const router = express.Router();
+const jwt = require("jsonwebtoken");
 const Rate = require('../models/rate');
+const Items = require('../models/item');
 const user = require('./user');
 
 //GET BACK ALL THE RATE
-router.get('/', user.allowIfLoggedin, user.grantAccess('readAny', 'profile'), async (req, res) => {
+router.get('/', async (req, res) => {
     try {
         const rate = await Rate.find();
         res.json(rate);
@@ -16,26 +18,27 @@ router.get('/', user.allowIfLoggedin, user.grantAccess('readAny', 'profile'), as
 
 //SUBMITS A RATE
 router.post('/', user.allowIfLoggedin, user.grantAccess('readAny', 'profile'), async (req, res) => {
+    const accessToken = req.headers["x-access-token"];
+    const storeId = req.body.storeId;
+    const user = await jwt.verify(accessToken, process.env.SECRET);
+    if (!user.userId) return res.sendStatus(403)
+    const store = await Items.findById(storeId)
     const rate = new Rate({
         rate: req.body.rate,
         comment: req.body.comment,
-        owner: req.body.owner
+        userId: user.userId
     });
-
-    try {
-        const saveRate = await rate.save();
+    const saveRate = await rate.save();
+    if (store) {
+        store.rate = store.rate.concat(saveRate._id)
+        console.log(store.rate)
+    await store.save();}
+    else return res.sendStatus(400)
+    try {   
+       
         res.json(saveRate);
+        console.log(rate);
     } catch (err) {
-        res.json({message: err});
-    }
-});
-
-//SPECIFIC RATE
-router.get('/:rateId', user.allowIfLoggedin, user.grantAccess('readAny', 'profile'), async (req, res) => {
-    try {
-    const rate = await Rate.findById(req.params.rateId);
-    res.json(rate);
-    } catch {
         res.json({message: err});
     }
 });
