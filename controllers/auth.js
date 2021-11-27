@@ -65,24 +65,4 @@ router.post('/login', async (req, res) => {
             accessToken
         });    
 });
-
-//GET ALL USERS
-router.get('/users', async (req, res) => {
-    try {
-        const users = await User.find();
-        res.json(users);
-    } catch (err) {
-        res.json({message: err});
-    }
-})
-
-//GET USER BY ID
-router.get('/users/:userId', async (req, res) => {
-    try {
-        const user = await User.findById(req.params.userId);
-        res.json(user);
-    } catch (err) {
-        res.json({message: err});
-    }
-})
 module.exports = router;
