@@ -19,7 +19,6 @@ router.post('/', user.allowIfLoggedin, user.grantAccess('readAny', 'profile'), a
     const item = new Item({
        name: req.body.name,
        address: req.body.address,
-       rate: req.body.rate,
        price: req.body.price,
        contact_number: req.body.contact_number,
        description: req.body.description,
@@ -36,14 +35,10 @@ router.post('/', user.allowIfLoggedin, user.grantAccess('readAny', 'profile'), a
 });
 
 //GET THE ITEM BY ID
-router.get('/:itemId', user.allowIfLoggedin, user.grantAccess('readAny', 'profile'), async (req, res) => {
+router.get('/:itemId', async (req, res) => {
     try {
         const item = await Item.findById(req.params.itemId);
-        const getRate = item.rate;
-
-        const getAvg = getRate => getRate.reduce((prev, curr) => prev + curr)/getRate.length;
-        const rate = getAvg(getRate);
-        res.json({rate: rate});
+        res.json(item);
     } catch(err) {
         res.json({message: err});
     }
