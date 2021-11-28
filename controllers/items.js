@@ -5,7 +5,7 @@ const Item = require('../models/item');
 const user = require('./user');
 
 //GET BACK ALL THE ITEMS
-router.get('/', user.allowIfLoggedin, user.grantAccess('readAny', 'profile'), async (req, res) => {
+router.get('/', async (req, res) => {
     try {
         const item = await Item.find();
         res.json(item);
@@ -66,19 +66,5 @@ router.put('/:itemId', user.allowIfLoggedin, user.grantAccess('updateAny', 'prof
         res.json({message: err});
     }
 });
-
-//Get average rate
-// router.get('/getAvg/:itemId', async (req, res) => {
-//     try {
-//         const getAvgrate = await Item.findById(req.params.itemId);
-        
-//         const avgRate = getAvgrate.rate;
-
-//         const av = avgRate => avgRate.reduce((prev, curr) => prev + curr)/avgRate.length;
-//         res.json(av(avgRate));
-//     } catch {
-//         res.json({message: err});
-//     }
-// });
 
 module.exports = router;
