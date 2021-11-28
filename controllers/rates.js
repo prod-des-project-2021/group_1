@@ -1,4 +1,5 @@
 const express = require('express');
+const mongoose = require('mongoose');
 
 const router = express.Router();
 const jwt = require("jsonwebtoken");
@@ -13,7 +14,7 @@ router.get('/', async (req, res) => {
         const rate = await Rate.find();
         res.json(rate);
     } catch (err) {
-        res.json({message: err});
+        res.json({ message: err });
     }
 });
 
@@ -36,43 +37,47 @@ router.post('/', user.allowIfLoggedin, user.grantAccess('readAny', 'profile'), a
     if (store) {
         store.rate = store.rate.concat(saveRate.rate)
         await store.save()
-    } else return res.status(400).json({msg: 'Invalid store id'})
-    
-    try {   
+    } else return res.status(400).json({ msg: 'Invalid store id' })
+
+    try {
         res.json(saveRate);
     } catch (err) {
-        res.json({message: err});
+        res.json({ message: err });
     }
 });
 
 //GET ALL Rates for a store by storeId
 
-router.get('/rate/:storeId', async (req, res) => {
-        const rates = await Rate.find({storedId: req.params.storeId});
-        if (rates) res.json(rates);
-        else res.status(400).json({msg: 'Invalid request'})
+router.get('/:storeId', async (req, res) => {
+    const storeId = mongoose.Types.ObjectId(req.params.storeId);
+    const rates = await Rate.findOne({
+        storeId
+    });
+    if (rates) res.json(rates);
+    else res.status(400).json({ msg: 'Invalid request' })
 });
 
 //DELETE RATE
 router.delete('/:rateId', user.allowIfLoggedin, user.grantAccess('deleteAny', 'profile'), async (req, res) => {
     try {
-    const removeRate = await Rate.remove({_id: req.params.rateId})
-    res.json(removeRate);
-    } catch(err) {
-        res.json({message: err});
+        const removeRate = await Rate.remove({ _id: req.params.rateId })
+        res.json(removeRate);
+    } catch (err) {
+        res.json({ message: err });
     }
 });
 
 //UPDATE RATE
 router.put('/:rateId', user.allowIfLoggedin, user.grantAccess('updateAny', 'profile'), async (req, res) => {
-    try{
+    try {
         const updatedRate = await Rate.updateOne(
-            {_id: req.params.rateId}, 
-            {$set: {rate: req.body.rate}
-        });
+            { _id: req.params.rateId },
+            {
+                $set: { rate: req.body.rate }
+            });
         res.json(updatedRate);
-    } catch(err) {
-        res.json({message: err});
+    } catch (err) {
+        res.json({ message: err });
     }
 });
 module.exports = router;
