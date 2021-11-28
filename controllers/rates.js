@@ -50,7 +50,7 @@ router.post('/', user.allowIfLoggedin, user.grantAccess('readAny', 'profile'), a
 
 router.get('/:storeId', async (req, res) => {
     const storeId = mongoose.Types.ObjectId(req.params.storeId);
-    const rates = await Rate.findOne({
+    const rates = await Rate.find({
         storeId
     });
     if (rates) res.json(rates);
