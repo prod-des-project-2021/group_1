@@ -22,10 +22,10 @@ const itemSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    rate : {
+    rate : [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Rate'
-    },
+    }],
     price : {
         type: Number,
         required: true

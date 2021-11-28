@@ -3,13 +3,12 @@ const mongoose = require('mongoose');
 const rateSchema = new mongoose.Schema({
     rate : {
         type: Number,
-        enum: [1, 2, 3, 4, 5],
-        required: true,
+        enum: [1, 2, 3, 4, 5]
     },
     comment : {
         type: String
     },
-    owner : {
+    userId : {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
     },
