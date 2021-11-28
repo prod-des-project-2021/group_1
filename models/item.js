@@ -1,17 +1,6 @@
 const mongoose = require("mongoose");
 const geocoder = require("../utils/geocoder");
 
-// const geoSchema = new mongoose.Schema({
-//     type: {
-//         type: String,
-//         default: 'Point'
-//     },
-//     coordinates: {
-//         type: [Number],
-//         index: '2dsphere'
-//     }
-// });
-
 //Create geolocation Schema & model 
 const itemSchema = new mongoose.Schema({
     name : {
@@ -22,10 +11,10 @@ const itemSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    rate : [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Rate'
-    }],
+    rate : {
+        type: Array,
+        default: []
+    },
     price : {
         type: Number,
         required: true
