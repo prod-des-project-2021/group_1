@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 const Rate = require('../models/rate');
 const Items = require('../models/item');
 const user = require('./user');
+const User = require('../models/User');
 
 //GET BACK ALL THE RATE
 router.get('/', async (req, res) => {
@@ -23,33 +24,33 @@ router.post('/', user.allowIfLoggedin, user.grantAccess('readAny', 'profile'), a
     const user = await jwt.verify(accessToken, process.env.SECRET);
     if (!user.userId) return res.sendStatus(403)
     const store = await Items.findById(storeId)
+    const userName = await User.findById(user.userId)
     const rate = new Rate({
         rate: req.body.rate,
         comment: req.body.comment,
+        storeId,
+        userName: userName.name,
         userId: user.userId
     });
     const saveRate = await rate.save();
     if (store) {
-        store.rate = store.rate.concat(saveRate._id)
-        console.log(store.rate)
-    await store.save();}
-    else return res.sendStatus(400)
+        store.rate = store.rate.concat(saveRate.rate)
+        await store.save()
+    } else return res.status(400).json({msg: 'Invalid store id'})
+    
     try {   
-       
         res.json(saveRate);
-        console.log(rate);
     } catch (err) {
         res.json({message: err});
     }
 });
 
-//GET ALL RATES FOR THIS storeId
+//GET ALL Rates for a store by storeId
 
 router.get('/rate/:storeId', async (req, res) => {
-        await Rate.find({storeId: req.params.storeId});
-        const rates = await Rate.find({storedId: '61a2b85577772ccd1a0ede55'});
+        const rates = await Rate.find({storedId: req.params.storeId});
         if (rates) res.json(rates);
-        console.log(req.params.storeId)
+        else res.status(400).json({msg: 'Invalid request'})
 });
 
 //DELETE RATE
