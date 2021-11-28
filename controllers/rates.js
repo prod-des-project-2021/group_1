@@ -43,6 +43,21 @@ router.post('/', user.allowIfLoggedin, user.grantAccess('readAny', 'profile'), a
     }
 });
 
+//GET ALL RATES FOR THIS storeId
+// router.get('/:storeId', async (req, res) => {
+//     await Rate.find({storeId: req.params.storeId});
+//     const rates = await Rate.find({storeId: '61a2b85577772ccd1a0ede55'});
+//     if (rates) res.json(rates);
+//     console.log(req.params.storeId)
+// })
+
+router.get('/rate/:storeId', async (req, res) => {
+        await Rate.find({storeId: req.params.storeId});
+        const rates = await Rate.find({storedId: '61a2b85577772ccd1a0ede55'});
+        if (rates) res.json(rates);
+        console.log(req.params.storeId)
+});
+
 //DELETE RATE
 router.delete('/:rateId', user.allowIfLoggedin, user.grantAccess('deleteAny', 'profile'), async (req, res) => {
     try {
