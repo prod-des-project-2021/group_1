@@ -1,6 +1,5 @@
 const express = require('express');
 const mongoose = require('mongoose');
-
 const router = express.Router();
 const jwt = require("jsonwebtoken");
 const Rate = require('../models/rate');
@@ -12,13 +11,13 @@ const User = require('../models/User');
 router.get('/', async (req, res) => {
     try {
         const rate = await Rate.find();
-        res.json(rate);
+        res.status(200).json(rate);
     } catch (err) {
-        res.json({ message: err });
+        res.status(404).json({ message: err });
     }
 });
 
-//SUBMITS A RATE
+//CREATE A RATE
 router.post('/', user.allowIfLoggedin, user.grantAccess('readAny', 'profile'), async (req, res) => {
     const accessToken = req.headers["x-access-token"];
     const storeId = req.body.storeId;
@@ -40,30 +39,29 @@ router.post('/', user.allowIfLoggedin, user.grantAccess('readAny', 'profile'), a
     } else return res.status(400).json({ msg: 'Invalid store id' })
 
     try {
-        res.json(saveRate);
+        res.status(200).json(saveRate);
     } catch (err) {
-        res.json({ message: err });
+        res.status(404).json({ message: err });
     }
 });
 
 //GET ALL Rates for a store by storeId
-
 router.get('/:storeId', async (req, res) => {
     const storeId = mongoose.Types.ObjectId(req.params.storeId);
     const rates = await Rate.find({
         storeId
     });
     if (rates) res.json(rates);
-    else res.status(400).json({ msg: 'Invalid request' })
+    else res.status(404).json({ msg: 'Invalid request' })
 });
 
 //DELETE RATE
 router.delete('/:rateId', user.allowIfLoggedin, user.grantAccess('deleteAny', 'profile'), async (req, res) => {
     try {
         const removeRate = await Rate.remove({ _id: req.params.rateId })
-        res.json(removeRate);
+        res.status(200).json(removeRate);
     } catch (err) {
-        res.json({ message: err });
+        res.status(404).json({ message: err });
     }
 });
 
@@ -75,9 +73,10 @@ router.put('/:rateId', user.allowIfLoggedin, user.grantAccess('updateAny', 'prof
             {
                 $set: { rate: req.body.rate }
             });
-        res.json(updatedRate);
+        res.status(200).json(updatedRate);
     } catch (err) {
-        res.json({ message: err });
+        res.status(404).json({ message: err });
     }
 });
+
 module.exports = router;

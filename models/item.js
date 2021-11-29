@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const geocoder = require("../utils/geocoder");
 
-//Create geolocation Schema & model 
+//Create Store Schema & model 
 const itemSchema = new mongoose.Schema({
     name : {
         type: String,

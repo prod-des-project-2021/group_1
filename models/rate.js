@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 
+//Create Rate Schema & model 
 const rateSchema = new mongoose.Schema({
     rate : {
         type: Number,

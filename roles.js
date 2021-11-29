@@ -3,18 +3,18 @@ const ac = new AccessControl();
 
 exports.roles = (function() {
 ac.grant("basic")
- .readOwn("profile")
- .updateOwn("profile")
+  .readOwn("profile")
+  .updateOwn("profile")
 
 ac.grant("supervisor")
- .extend("basic")
- .readAny("profile")
+  .extend("basic")
+  .readAny("profile")
 
 ac.grant("admin")
- .extend("basic")
- .extend("supervisor")
- .updateAny("profile")
- .deleteAny("profile")
+  .extend("basic")
+  .extend("supervisor")
+  .updateAny("profile")
+  .deleteAny("profile")
 
 return ac;
 })();
