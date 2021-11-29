@@ -1,6 +1,5 @@
 const express = require('express');
 const mongoose = require('mongoose');
-
 const router = express.Router();
 const jwt = require("jsonwebtoken");
 const Rate = require('../models/rate');
@@ -18,7 +17,7 @@ router.get('/', async (req, res) => {
     }
 });
 
-//SUBMITS A RATE
+//CREATE A RATE
 router.post('/', user.allowIfLoggedin, user.grantAccess('readAny', 'profile'), async (req, res) => {
     const accessToken = req.headers["x-access-token"];
     const storeId = req.body.storeId;
@@ -47,7 +46,6 @@ router.post('/', user.allowIfLoggedin, user.grantAccess('readAny', 'profile'), a
 });
 
 //GET ALL Rates for a store by storeId
-
 router.get('/:storeId', async (req, res) => {
     const storeId = mongoose.Types.ObjectId(req.params.storeId);
     const rates = await Rate.find({
@@ -80,4 +78,5 @@ router.put('/:rateId', user.allowIfLoggedin, user.grantAccess('updateAny', 'prof
         res.status(404).json({ message: err });
     }
 });
+
 module.exports = router;
