@@ -19,7 +19,7 @@ exports.getUser = async (req, res, next) => {
             data: user
         });
     } catch (error) {
-        next(error)
+        res.status(404).send(error);
     }
 }
 
@@ -34,7 +34,7 @@ exports.updateUser = async (req, res, next) => {
             message: 'User has been updated'
         });
     } catch (error) {
-        next(error)
+        res.status(404).send(error);
     }
 }
 
@@ -47,7 +47,7 @@ exports.deleteUser = async (req, res, next) => {
             message: 'User has been deleted'
         });
     } catch (error) {
-        next(error)
+        res.status(404).send(error);
     }
 }
 
@@ -62,7 +62,7 @@ exports.grantAccess = function(action, resource) {
             }   
             next()
         } catch (error) {
-        next(error)
+            res.status(404).send(error);
         }
     }
 }
@@ -76,6 +76,6 @@ exports.allowIfLoggedin = async (req, res, next) => {
         req.user = user;
         next();
         } catch (error) {
-        next(error);
+            res.status(404).send(error);
     }
 }

@@ -34,14 +34,14 @@ router.post('/register', async (req, res) => {
         });
         user.accessToken = accessToken;
         const savedUser = await user.save();
-        res.json({
+        res.status(200).json({
             user: savedUser,
             message: "You have signed up successfully"
         });
-}catch(err){
-        res.status(404).send(err);
-    }
-});
+    }catch(err){
+            res.status(404).send(err);
+        }
+    });
 
 //LOGIN
 router.post('/login', async (req, res) => {

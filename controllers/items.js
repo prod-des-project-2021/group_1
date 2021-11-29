@@ -8,9 +8,9 @@ const user = require('./user');
 router.get('/', async (req, res) => {
     try {
         const item = await Item.find();
-        res.json(item);
+        res.status(200).json(item);
     } catch(err) {
-        res.json({message: err});
+        res.status(404).json({message: err});
     }
 });
 
@@ -28,9 +28,9 @@ router.post('/', user.allowIfLoggedin, user.grantAccess('readAny', 'profile'), a
 
     try {
         const saveItem = await item.save();
-        res.json(saveItem);
+        res.status(200).json(saveItem);
     } catch(err) {
-        res.json({message: err});
+        res.status(404).json({message: err});
     }
 });
 
@@ -38,9 +38,9 @@ router.post('/', user.allowIfLoggedin, user.grantAccess('readAny', 'profile'), a
 router.get('/:itemId', async (req, res) => {
     try {
         const item = await Item.findById(req.params.itemId);
-        res.json(item);
+        res.status(200).json(item);
     } catch(err) {
-        res.json({message: err});
+        res.status(404).json({message: err});
     }
 });
 
@@ -48,9 +48,9 @@ router.get('/:itemId', async (req, res) => {
 router.delete('/:itemId', user.allowIfLoggedin, user.grantAccess('deleteAny', 'profile'), async (req, res) => {
     try {
         const removeItem = await Item.remove({_id: req.params.itemId});
-        res.json(removeItem);
+        res.status(200).json(removeItem);
     } catch(err) {
-        res.json({message: err});
+        res.status(404).json({message: err});
     }
 });
 
@@ -61,9 +61,9 @@ router.put('/:itemId', user.allowIfLoggedin, user.grantAccess('updateAny', 'prof
             {_id: req.params.itemId}, 
             {$set: {name: req.body.name}
         });
-        res.json(updatedItem);
+        res.status(200).json(updatedItem);
     } catch(err) {
-        res.json({message: err});
+        res.status(404).json({message: err});
     }
 });
 
