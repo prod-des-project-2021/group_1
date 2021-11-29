@@ -4,21 +4,19 @@ const Joi = require('@hapi/joi');
 
 // REGISTER VALIDATION
 const registerValidation = data => {
-
-
-    const schema = Joi.object({
-        username: Joi.string()
-                .min(6)
-                .required(),
-        name: Joi.string()
-                .min(6)
-                .required(),
-        passwordHash: Joi.string()
-                .min(6)
-                .required(),
-        role: Joi.string()    
-    });
-    return schema.validate(data);
+        const schema = Joi.object({
+                username: Joi.string()
+                        .min(6)
+                        .required(),
+                name: Joi.string()
+                        .min(6)
+                        .required(),
+                passwordHash: Joi.string()
+                        .min(6)
+                        .required(),
+                role: Joi.string()    
+        });
+        return schema.validate(data);
 };
 
 // LOGIN VALIDATION
