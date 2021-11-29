@@ -1,5 +1,4 @@
 const express = require('express');
-
 const router = express.Router();
 const Item = require('../models/item');
 const user = require('./user');
@@ -56,7 +55,7 @@ router.delete('/:itemId', user.allowIfLoggedin, user.grantAccess('deleteAny', 'p
 
 //UPDATE ITEMS
 router.put('/:itemId', user.allowIfLoggedin, user.grantAccess('updateAny', 'profile'), async (req, res) => {
-    try{
+    try {
         const updatedItem = await Item.updateOne(
             {_id: req.params.itemId}, 
             {$set: {name: req.body.name}
