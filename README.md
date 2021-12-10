@@ -1,3 +1,5 @@
+CI: [![Netlify Status](https://api.netlify.com/api/v1/badges/61805964-92df-4f71-9419-c55ebbd8a2eb/deploy-status)](https://app.netlify.com/sites/haircutapp/deploys)
+
 # Haircut app
 ### TECHNICAL PROJECT PLAN: https://docs.google.com/document/d/1qKmIqAfTSxNC-mSzHoeMiRJQSIKU0rRjxf-YufIMjE0/edit?usp=sharing
 ### DEPLOYMENT: https://docs.google.com/document/d/1DCFaY1nf6H6uV0-bnfGbNTWu0f1uhIhvseD_JTo_uCs/edit

@@ -1,0 +1,21 @@
+.marketPrice {
+    border-color: #0d1718!important;
+    background-color: #fba28a!important;
+    border-radius: 13px;
+    padding: 6px;
+    box-shadow: 1px 2px 6px 0 rgb(18 33 34 / 8%);
+    cursor: pointer;
+    color: black;
+    font-family: var(--font-family);
+}
+
+.activeMarketPrice {
+    border-color: #0d1718!important;
+    background-color: black!important;
+    border-radius: 13px;
+    padding: 6px;
+    box-shadow: 1px 2px 6px 0 rgb(18 33 34 / 8%);
+    cursor: pointer;
+    color: white;
+    font-family: var(--font-family);
+}
