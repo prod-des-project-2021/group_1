@@ -1,5 +1,6 @@
 # Haircut app
 ### TECHNICAL PROJECT PLAN: https://docs.google.com/document/d/1qKmIqAfTSxNC-mSzHoeMiRJQSIKU0rRjxf-YufIMjE0/edit?usp=sharing
+### APP DESIGN: https://www.figma.com/file/30DNckDNW8vOt5WMpuHA6K/Untitled?node-id=54%3A18
 ### DEPLOYMENT: https://docs.google.com/document/d/1DCFaY1nf6H6uV0-bnfGbNTWu0f1uhIhvseD_JTo_uCs/edit
 
 # Requirements:
